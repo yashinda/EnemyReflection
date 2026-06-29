@@ -64,6 +64,9 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnInteract()
     {
+        if (_currentInteractable == null) 
+            return;
+        
         if (IsPlayerLookingAt(_currentInteractable))
         {
             _currentInteractable.Interact(this);

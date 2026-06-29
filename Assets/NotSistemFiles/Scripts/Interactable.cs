@@ -4,7 +4,14 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
      public Canvas canvas;
-     public Material materialOutline;
+     public  MeshRenderer targetRenderer; 
+     private MaterialPropertyBlock _propBlock;
+     
+     private const int OutlineMaterialIndex = 1; 
+     private void Awake()
+     {
+          _propBlock = new MaterialPropertyBlock();
+     }
 
      private void Start()
      {
@@ -13,8 +20,17 @@ public abstract class Interactable : MonoBehaviour
 
      public void ToggleUI(bool isVisible)
      {
-          canvas.gameObject.SetActive(isVisible);
-          materialOutline.SetFloat("_Scale", isVisible ? 1.15f : 0.0f);
+          if (canvas != null)
+          {
+               canvas.gameObject.SetActive(isVisible);
+          }
+          
+          if (targetRenderer != null)
+          {
+               targetRenderer.GetPropertyBlock(_propBlock, OutlineMaterialIndex);
+               _propBlock.SetFloat("_Scale", isVisible ? 1.15f : 0.0f);
+               targetRenderer.SetPropertyBlock(_propBlock, OutlineMaterialIndex);
+          }
      }
      
      public abstract void Interact(PlayerInteraction player = null);
