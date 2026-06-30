@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Mirror
+  - Floor
+  - Enemy
   layers:
   - Default
   - TransparentFX
