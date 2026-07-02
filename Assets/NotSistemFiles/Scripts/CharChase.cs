@@ -20,6 +20,7 @@ public class CharChase : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _agent = GetComponent<NavMeshAgent>();
+        EnterIdleState();
     }
     
     private void OnTriggerEnter(Collider other)
@@ -52,6 +53,9 @@ public class CharChase : MonoBehaviour
         _currentState = CharState.Idle;
         _agent.isStopped = true;
         _agent.ResetPath();
+
+        _agent.Warp(spawnPoint.position);
+        transform.rotation = spawnPoint.rotation;
         _animator.SetBool("Idle", true);
         transform.position = spawnPoint.position;
         transform.rotation = spawnPoint.rotation;
