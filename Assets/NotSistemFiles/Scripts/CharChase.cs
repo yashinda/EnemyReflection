@@ -19,6 +19,7 @@ public class CharChase : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _agent = GetComponent<NavMeshAgent>();
     }
     
     private void OnTriggerEnter(Collider other)
@@ -29,10 +30,19 @@ public class CharChase : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (_currentState == CharState.Chase)
+        {
+            _agent.SetDestination(player.position);
+        }
+    }
+
     public void EnterChaseState()
     {
         _currentState = CharState.Chase;
-        _animator.SetTrigger("Chase");
+        _animator.SetBool("Idle", false);
+        _animator.SetTrigger("Run");
         _agent.isStopped = false;
         _agent.SetDestination(player.position);
     }
@@ -42,7 +52,7 @@ public class CharChase : MonoBehaviour
         _currentState = CharState.Idle;
         _agent.isStopped = true;
         _agent.ResetPath();
-        _animator.SetTrigger("Idle");
+        _animator.SetBool("Idle", true);
         transform.position = spawnPoint.position;
         transform.rotation = spawnPoint.rotation;
     }

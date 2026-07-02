@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TriggerChase : MonoBehaviour
+public class TriggerChaseEnd : MonoBehaviour
 {
     public CharChase charChase;
 
@@ -8,7 +8,7 @@ public class TriggerChase : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            charChase.EnterChaseState();
+            charChase.EnterIdleState();
         }
     }
 }
